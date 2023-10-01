@@ -35,7 +35,7 @@ namespace MovieTicketShop.Models
         //Relationships
         public int CinemaId { get; set; }
         [ForeignKey("CinemaId")]
-        public Cinema CinemaName { get; set; }
+        public Cinema Cinema { get; set; }
 
 
         public List<Actor_Movie> Actors_Movies { get; set; }

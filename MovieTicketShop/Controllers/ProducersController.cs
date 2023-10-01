@@ -1,26 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MovieTicketShop.DbContexts;
 using MovieTicketShop.Models;
+using MovieTicketShop.Services;
 
 namespace MovieTicketShop.Controllers
 {
     public class ProducersController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IProducersService _producersService;
 
-
-
-        public ProducersController(AppDbContext context)
+        public ProducersController(IProducersService producersService)
         {
-            _context = context;
+            _producersService = producersService;
         }
-
-
 
         public async Task<IActionResult> Index()
         {
-            List<Producer> allProducers = await _context.Producers.ToListAsync();
+            IList<Producer> allProducers = await _producersService.GetAllProducers();
             return View(allProducers);
         }
     }

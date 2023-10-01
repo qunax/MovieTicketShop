@@ -2,25 +2,29 @@
 using Microsoft.EntityFrameworkCore;
 using MovieTicketShop.DbContexts;
 using MovieTicketShop.Models;
+using MovieTicketShop.Services;
 
 namespace MovieTicketShop.Controllers
 {
     public class MoviesController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IMoviesService _moviesService;
 
-
-        public MoviesController(AppDbContext context)
+        public MoviesController(IMoviesService moviesService)
         {
-            _context = context;
+            _moviesService = moviesService;
         }
-
-
 
         public async Task<IActionResult> Index()
         {
-            List<Movie> allMovies = await _context.Movies.ToListAsync();
+            IList<Movie> allMovies = await _moviesService.GetAllMovies();
             return View(allMovies);
+        }
+
+        public async Task<IActionResult> Filtered()
+        {
+            IList<Movie> filteredMovies = await _moviesService.GetFilteredMovies();
+            return View(filteredMovies);
         }
     }
 }
